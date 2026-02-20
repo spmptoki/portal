@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Serikat Pekerja Mandiri – PT. OKI Pulp & Paper Mills</title>
+<meta name="description" content="Website resmi Serikat Pekerja Mandiri PT. OKI Pulp & Paper Mills." />
+<meta name="theme-color" content="#0a84ff" />
+<style>
+  :root{
+    --bg: #0b0c0f;
+    --panel: #111318;
+    --text: #e9eef5;
+    --muted: #a8b0bd;
+    --brand: #0a84ff; /* iOS blue */
+    --brand-2:#30d158; /* iOS green */
+    --warn: #ff9f0a;
+    --danger:#ff453a;
+    --ring: rgba(10,132,255,.35);
+    --card: #0f1116;
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --radius: 18px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f6f7fb; --panel:#ffffff; --text:#111318; --muted:#4b5563; --card:#ffffff;
+      --shadow: 0 10px 25px rgba(2,6,23,.08);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font: 15px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    color:var(--text); background:linear-gradient(180deg,var(--bg),#06070a 400px) fixed;
+  }
+  a{color:var(--brand); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .app{
+    display:grid; grid-template-rows:auto 1fr;
+    min-height:100dvh;
+  }
+  /* Topbar */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter:saturate(140%) blur(10px);
+    background: color-mix(in srgb, var(--panel) 86%, transparent);
+    border-bottom:1px solid color-mix(in srgb, var(--text) 12%, transparent);
+    display:flex; align-items:center; gap:10px; padding:.65rem .8rem;
+  }
+  .iconbtn{
+    appearance:none; border:0; background:transparent; padding:.6rem; border-radius:14px; cursor:pointer;
+    display:grid; place-items:center; outline:none;
+  }
+  .iconbtn:hover{background:color-mix(in srgb, var(--text) 8%, transparent)}
+  .iconbtn:focus-visible{box-shadow:0 0 0 3px var(--ring)}
+  .brand{
+    display:flex; align-items:center; gap:.7rem; margin-inline:auto 0;
+  }
+  .brand img{
+    width:34px; height:34px; object-fit:contain; border-radius:8px; background:#fff; box-shadow:var(--shadow)
+  }
+  .brand h1{font-size:16px; margin:0; letter-spacing:.2px}
+  .brand small{display:block; color:var(--muted); font-weight:500; font-size:12px}
+  .spacer{flex:1}
+  .loginbtn, .pill{
+    border:0; padding:.55rem .9rem; border-radius:999px; font-weight:600; cursor:pointer;
+    background:linear-gradient(180deg, color-mix(in srgb,var(--brand) 90%, #fff 0%), color-mix(in srgb,var(--brand) 70%, #000 0%));
+    color:#fff; box-shadow:0 6px 16px color-mix(in srgb, var(--brand) 35%, transparent);
+  }
+  .loginbtn:hover{filter:brightness(1.05)}
+  .avatar{
+    width:34px; height:34px; border-radius:50%; background:linear-gradient(180deg,#d9e6ff,#9ec2ff);
+    display:grid; place-items:center; color:#0b3d9a; font-weight:800; box-shadow:var(--shadow); cursor:pointer; user-select:none;
+  }
+  /* Drawer */
+  .drawer{
+    position:fixed; inset:0; pointer-events:none; z-index:60;
+  }
+  .drawer.open{pointer-events:auto}
+  .scrim{
+    position:absolute; inset:0; background:rgba(0,0,0,.38); opacity:0; transition:opacity .25s ease;
+  }
+  .drawer.open .scrim{opacity:1}
+  .sheet{
+    position:absolute; top:0; left:0; height:100%; width:min(92vw,360px);
+    background:var(--panel); box-shadow: 0 30px 60px rgba(0,0,0,.5);
+    border-right:1px solid color-mix(in srgb, var(--text) 10%, transparent);
+    translate:-100% 0; transition:translate .28s cubic-bezier(.2,.7,.2,1);
+    display:flex; flex-direction:column;
+  }
+  .drawer.open .sheet{translate:0 0}
+  .sheet header{padding:1rem 1rem .5rem; border-bottom:1px solid color-mix(in srgb, var(--text) 10%, transparent)}
+  .sheet header .logo-row{display:flex; align-items:center; gap:.75rem}
+  .sheet header img{width:40px; height:40px; border-radius:10px; background:#fff}
+  .sheet nav{padding:.4rem .6rem .8rem; overflow:auto}
+  .navlink{
+    display:flex; align-items:center; gap:.8rem; padding:.72rem .8rem; border-radius:12px; font-weight:600; color:var(--text);
+  }
+  .navlink:hover{background:color-mix(in srgb, var(--text) 8%, transparent)}
+  .navlink[aria-current="page"]{background:color-mix(in srgb,var(--brand) 18%, transparent); outline:1px solid color-mix(in srgb,var(--brand) 45%, transparent)}
+  .navlink svg{flex:0 0 20px}
+  /* Content */
+  .container{padding:1rem; display:grid; gap:14px; margin:0 auto; width:min(100%,1000px)}
+  .hero{
+    background: radial-gradient(1200px 420px at 50% -120px, color-mix(in srgb,var(--brand) 10%, transparent), transparent 60%), var(--card);
+    border:1px solid color-mix(in srgb, var(--text) 10%, transparent);
+    border-radius:var(--radius); padding:clamp(18px,3vw,30px);
+    box-shadow:var(--shadow);
+  }
+  .hero h2{margin:.1rem 0 .4rem; font-size:clamp(20px,3.8vw,34px); letter-spacing:.2px}
+  .hero p{color:var(--muted); margin:0}
+  .ribbon{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    padding:12px 14px; border-radius:14px; background:linear-gradient(90deg, color-mix(in srgb,var(--brand) 20%, transparent), transparent);
+    border:1px dashed color-mix(in srgb, var(--brand) 55%, transparent);
+    margin-top:12px;
+  }
+  .ribbon strong{font-weight:800}
+  .section{background:var(--card); border:1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius:var(--radius); box-shadow:var(--shadow); padding:clamp(14px,2.4vw,22px)}
+  .grid{display:grid; gap:12px}
+  @media(min-width:760px){ .grid.cols-2{grid-template-columns:1fr 1fr} }
+  .kpi{display:flex; gap:12px; align-items:center; background:linear-gradient(180deg, transparent, color-mix(in srgb,var(--text) 6%, transparent)); padding:10px 12px; border-radius:12px}
+  .muted{color:var(--muted)}
+  .divider{height:1px; background:color-mix(in srgb, var(--text) 12%, transparent); margin:10px 0}
+  /* Cards & lists */
+  .card{padding:14px; border-radius:14px; background:var(--panel); border:1px solid color-mix(in srgb, var(--text) 10%, transparent)}
+  .list{display:grid; gap:10px}
+  .list .item{display:flex; gap:12px; align-items:center; padding:10px 12px; border-radius:12px; background:color-mix(in srgb, var(--text) 6%, transparent)}
+  /* Forms */
+  form{display:grid; gap:12px}
+  label{font-weight:700}
+  .field{
+    display:grid; gap:6px
+  }
+  input, select, textarea{
+    width:100%; padding:12px 12px; border-radius:12px; border:1px solid color-mix(in srgb, var(--text) 18%, transparent);
+    background:var(--panel); color:var(--text); outline:none;
+  }
+  input:focus, select:focus, textarea:focus{box-shadow:0 0 0 3px var(--ring); border-color:color-mix(in srgb, var(--brand) 60%, transparent)}
+  .actions{display:flex; gap:10px; flex-wrap:wrap}
+  .btn{border:0; border-radius:12px; padding:12px 14px; font-weight:700; cursor:pointer}
+  .btn.primary{background:var(--brand); color:#fff; box-shadow:0 6px 14px color-mix(in srgb,var(--brand) 30%, transparent)}
+  .btn.ghost{background:transparent; color:var(--text); border:1px solid color-mix(in srgb, var(--text) 20%, transparent)}
+  .notice{padding:10px 12px; border-radius:12px; border:1px solid color-mix(in srgb,var(--brand) 50%, transparent); background:color-mix(in srgb,var(--brand) 10%, transparent)}
+  .success{border-color: color-mix(in srgb,var(--brand-2) 60%, transparent); background:color-mix(in srgb,var(--brand-2) 12%, transparent)}
+  .warn{border-color: color-mix(in srgb,var(--warn) 60%, transparent); background:color-mix(in srgb,var(--warn) 12%, transparent)}
+  /* Modal */
+  .modal{position:fixed; inset:0; display:none; place-items:center; z-index:70}
+  .modal.open{display:grid}
+  .modal .mask{position:absolute; inset:0; background:rgba(0,0,0,.5); animation:fade .2s ease}
+  .modal .dialog{
+    position:relative; width:min(92vw,520px); background:var(--panel); border-radius:20px; padding:16px; border:1px solid color-mix(in srgb, var(--text) 10%, transparent); box-shadow:var(--shadow);
+    animation:pop .18s ease;
+  }
+  .tabs{display:flex; gap:8px; margin-bottom:8px}
+  .tab{flex:1; padding:10px 12px; border-radius:12px; text-align:center; font-weight:800; cursor:pointer; border:1px solid color-mix(in srgb, var(--text) 12%, transparent)}
+  .tab.active{background:var(--brand); color:#fff; border-color:var(--brand)}
+  .close-x{position:absolute; right:8px; top:8px}
+  @keyframes pop{from{transform:scale(.96); opacity:.6} to{transform:scale(1); opacity:1}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  /* Footer */
+  footer{padding:40px 14px; color:var(--muted); text-align:center}
+  .footgrid{display:grid; gap:10px; grid-template-columns:1fr; justify-items:center}
+  @media(min-width:760px){ .footgrid{grid-template-columns:1fr 1fr 1fr; justify-items:stretch; text-align:left} }
+  .chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:color-mix(in srgb, var(--text) 8%, transparent); border:1px solid color-mix(in srgb,var(--text) 12%, transparent)}
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+</style>
+</head>
+<body>
+<div class="app" id="app" data-route="profile">
+  <!-- TOPBAR -->
+  <header class="topbar" role="banner">
+    <button class="iconbtn" id="menuBtn" aria-label="Buka menu" title="Menu" aria-haspopup="dialog">
+      <!-- menu icon -->
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="brand" aria-label="Serikat Pekerja Mandiri">
+      <img id="brandLogo" src="logo-serikat.png" alt="Logo Serikat Pekerja Mandiri" />
+      <div>
+        <h1>Serikat Pekerja Mandiri</h1>
+        <small>PT. OKI Pulp &amp; Paper Mills</small>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <button id="loginBtn" class="loginbtn">Masuk</button>
+    <div id="userMenu" class="avatar" style="display:none;" title="Profil anggota" aria-haspopup="menu">A</div>
+  </header>
+
+  <!-- DRAWER -->
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="scrim" id="scrim" tabindex="-1"></div>
+    <div class="sheet" role="dialog" aria-label="Menu">
+      <header>
+        <div class="logo-row">
+          <img src="logo-serikat.png" alt="Logo" />
+          <div>
+            <strong>Serikat Pekerja Mandiri</strong><br>
+            <small class="muted">Navigasi utama</small>
+          </div>
+        </div>
+      </header>
+      <nav>
+        <a href="#profile" class="navlink" data-link="profile" aria-current="page">
+          <svg viewBox="0 0 24 24"><path d="M12 3l9 6v12H3V9l9-6z" fill="currentColor" opacity=".16"/><path d="M12 3l9 6v12H3V9l9-6z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          Profil Serikat
+        </a>
+        <a href="#daftar" class="navlink" data-link="daftar">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="currentColor" opacity=".12"/><path d="M7 7h10M7 12h10M7 17h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Daftarkan Menjadi Anggota
+        </a>
+        <a href="#pengaduan" class="navlink" data-link="pengaduan">
+          <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1116 0v7H4v-7z" fill="currentColor" opacity=".12"/><path d="M12 8v6m0 4h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Pengaduan
+        </a>
+        <a href="#dokumen" class="navlink" data-link="dokumen">
+          <svg viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z" fill="currentColor" opacity=".12"/><path d="M6 3h9l5 5v13H6zM15 3v5h5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+          Dokumen Serikat
+        </a>
+        <a href="#agenda" class="navlink" data-link="agenda">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3" fill="currentColor" opacity=".12"/><path d="M16 3v4M8 3v4M3 9h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Agenda Kalender
+        </a>
+        <a href="#modul" class="navlink" data-link="modul">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z" fill="currentColor" opacity=".12"/><path d="M4 6h16v12H4zM8 6v12" stroke="currentColor" stroke-width="1.5"/></svg>
+          Modul Pelatihan
+        </a>
+        <a href="#program" class="navlink" data-link="program">
+          <svg viewBox="0 0 24 24"><circle cx="7" cy="12" r="3.2" fill="currentColor" opacity=".16"/><circle cx="17" cy="7" r="3.2" fill="currentColor" opacity=".16"/><circle cx="17" cy="17" r="3.2" fill="currentColor" opacity=".16"/><path d="M9.5 10.5l5-2.8M9.5 13.5l5 2.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Program Kerja Tahunan
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="container" id="view" role="main" tabindex="-1">
+    <!-- Content injected by JS; default is profile -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footgrid">
+      <div>
+        <div class="chip">📍 Sumsel • Ogan Komering Ilir</div>
+        <div class="chip">📧 sekretariat@contoh.org</div>
+      </div>
+      <div>
+        © <span id="y"></span> Serikat Pekerja Mandiri – PT. OKI Pulp &amp; Paper Mills
+      </div>
+      <div style="justify-self:end">
+        <a class="chip" href="#" onclick="toTop(event)">⬆️ Kembali ke atas</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="auth">
+  <div class="mask" data-close="auth"></div>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <button class="iconbtn close-x" aria-label="Tutup" data-close="auth">
+      <svg width="22" height="22" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <h3 id="authTitle" style="margin:6px 6px 10px">Masuk Anggota</h3>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="hp" role="tab" aria-selected="true">Nomor HP</button>
+      <button class="tab" data-tab="email" role="tab">Email</button>
+      <button class="tab" data-tab="kta" role="tab">No. KTA</button>
+    </div>
+
+    <!-- HP -->
+    <form id="form-hp" data-kind="hp" autocomplete="one-time-code" aria-labelledby="hpLabel">
+      <span id="hpLabel" class="sr-only">Login dengan nomor HP</span>
+      <div class="field">
+        <label for="hp">Nomor HP</label>
+        <input id="hp" inputmode="numeric" pattern="^[0-9]{9,15}$" placeholder="08xxxxxxxxxx" required />
+      </div>
+      <div class="field">
+        <label for="otp">Kode OTP</label>
+        <input id="otp" inputmode="numeric" pattern="^[0-9]{4,6}$" placeholder="Contoh: 123456" />
+        <small class="muted">Demo: isi sembarang angka (simulasi).</small>
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="submit">Masuk</button>
+        <button class="btn ghost" data-close="auth" type="button">Batal</button>
+      </div>
+    </form>
+
+    <!-- EMAIL -->
+    <form id="form-email" data-kind="email" style="display:none">
+      <div class="field">
+        <label for="em">Email</label>
+        <input id="em" type="email" placeholder="nama@contoh.com" required />
+      </div>
+      <div class="field">
+        <label for="pwd">Kata Sandi</label>
+        <input id="pwd" type="password" minlength="6" placeholder="••••••••" required />
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="submit">Masuk</button>
+        <button class="btn ghost" data-close="auth" type="button">Batal</button>
+      </div>
+    </form>
+
+    <!-- KTA -->
+    <form id="form-kta" data-kind="kta" style="display:none">
+      <div class="field">
+        <label for="kta">Nomor KTA</label>
+        <input id="kta" pattern="^[A-Z0-9-]{6,20}$" placeholder="XXXX/20XX/KTA/SPM" required />
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="submit">Masuk</button>
+        <button class="btn ghost" data-close="auth" type="button">Batal</button>
+      </div>
+    </form>
+
+    <div class="notice warn" style="margin-top:10px">
+      <strong>Catatan:</strong> Ini contoh UI. Integrasi OTP/Email/KTA bisa dihubungkan ke server Anda (API) & database anggota. Status login disimpan di perangkat (localStorage) untuk demo.
+    </div>
+  </div>
+</div>
+
+<script>
+  // --- Utilities
+  const $ = (sel, el=document) => el.querySelector(sel);
+  const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+  const view = $('#view');
+  const app = $('#app');
+
+  const routes = {
+    profile: renderProfile,
+    daftar: renderDaftar,
+    pengaduan: renderPengaduan,
+    dokumen: renderDokumen,
+    agenda: renderAgenda,
+    modul: renderModul,
+    program: renderProgram,
+    dashboard: renderDashboard
+  };
+
+  function setRoute(route, push=true){
+    app.dataset.route = route;
+    if(push) history.pushState({route}, "", `#${route}`);
+    // set nav active
+    $$('.navlink').forEach(a=>{
+      a.setAttribute('aria-current', a.dataset.link===route ? 'page':'false');
+    });
+    // render
+    (routes[route]||renderProfile)();
+    // close drawer for mobile
+    closeDrawer();
+    // focus main for a11y
+    view.focus();
+  }
+
+  function toTop(e){ e?.preventDefault?.(); window.scrollTo({top:0, behavior:'smooth'}) }
+
+  // --- Drawer
+  const drawer = $('#drawer'), scrim = $('#scrim');
+  $('#menuBtn').addEventListener('click', ()=> openDrawer());
+  scrim.addEventListener('click', ()=> closeDrawer());
+  function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
+  function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
+  $$('.navlink').forEach(a=> a.addEventListener('click', (e)=>{ e.preventDefault(); setRoute(a.dataset.link); }));
+
+  // --- Footer year
+  $('#y').textContent = new Date().getFullYear();
+
+  // --- Login Modal
+  const auth = $('#auth');
+  const loginBtn = $('#loginBtn');
+  const userMenu = $('#userMenu');
+
+  loginBtn.addEventListener('click', ()=> openModal('auth'));
+  auth.addEventListener('click', (e)=> {
+    if(e.target.dataset.close==='auth'){ closeModal('auth'); }
+  });
+  $$('[data-close="auth"]').forEach(b=> b.addEventListener('click', ()=> closeModal('auth')));
+
+  function openModal(id){ $('#'+id).classList.add('open'); }
+  function closeModal(id){ $('#'+id).classList.remove('open'); }
+
+  // Tabs behavior
+  $$('.tab').forEach(t=>{
+    t.addEventListener('click', ()=>{
+      $$('.tab').forEach(x=> x.classList.remove('active'));
+      t.classList.add('active');
+      const name = t.dataset.tab;
+      $$('form[id^="form-"]').forEach(f=> f.style.display = f.id==='form-'+name ? '' : 'none');
+    });
+  });
+
+  // Demo auth: accept any input that passes basic validation
+  function onLoginSuccess(profile){
+    localStorage.setItem('spm_user', JSON.stringify(profile));
+    loginBtn.style.display='none';
+    userMenu.style.display='grid';
+    userMenu.textContent = (profile.nama?.[0]||'A').toUpperCase();
+    closeModal('auth');
+    toast('Berhasil masuk sebagai ' + (profile.nama || 'Anggota'));
+    if(app.dataset.route==='profile'){ renderProfile(); }
+  }
+
+  // Forms submit
+  $('#form-hp').addEventListener('submit', e=>{
+    e.preventDefault();
+    const hp = $('#hp').value.trim();
+    if(!/^[0-9]{9,15}$/.test(hp)){ return toast('Nomor HP tidak valid', 'danger'); }
+    onLoginSuccess({nama:'Anggota', metode:'hp', hp});
+  });
+  $('#form-email').addEventListener('submit', e=>{
+    e.preventDefault();
+    const em = $('#em').value.trim();
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
+    if(!ok) return toast('Email tidak valid', 'danger');
+    onLoginSuccess({nama: em.split('@')[0], metode:'email', email: em});
+  });
+  $('#form-kta').addEventListener('submit', e=>{
+    e.preventDefault();
+    const k = $('#kta').value.trim();
+    if(!/^[A-Z0-9-]{6,20}$/.test(k)) return toast('Nomor KTA tidak valid', 'danger');
+    onLoginSuccess({nama:'Anggota KTA', metode:'kta', kta:k});
+  });
+
+  // Avatar dropdown (minimal)
+  userMenu.addEventListener('click', (e)=>{
+    const menu = document.createElement('div');
+    menu.style.position='fixed'; menu.style.top=(userMenu.getBoundingClientRect().bottom+8)+'px';
+    menu.style.right='12px'; menu.style.background='var(--panel)';
+    menu.style.border='1px solid color-mix(in srgb, var(--text) 10%, transparent)';
+    menu.style.borderRadius='14px'; menu.style.boxShadow='var(--shadow)';
+    menu.style.padding='6px'; menu.style.zIndex='80';
+    menu.innerHTML = `
+      <button class="navlink" style="width:240px" data-act="dash">Dashboard Anggota</button>
+      <button class="navlink" style="width:240px" data-act="logout">Keluar</button>`;
+    document.body.appendChild(menu);
+    const off = (evt)=>{
+      if(!menu.contains(evt.target) && evt.target!==userMenu){ menu.remove(); document.removeEventListener('click', off); }
+    };
+    document.addEventListener('click', off);
+    menu.addEventListener('click', (evt)=>{
+      const act = evt.target?.dataset?.act;
+      if(act==='logout'){
+        localStorage.removeItem('spm_user'); loginBtn.style.display=''; userMenu.style.display='none';
+        toast('Anda telah keluar'); if(app.dataset.route==='dashboard') setRoute('profile');
+      }
+      if(act==='dash'){ setRoute('dashboard'); }
+      menu.remove(); document.removeEventListener('click', off);
+    });
+  });
+
+  // Load session
+  const sess = localStorage.getItem('spm_user');
+  if(sess){
+    try{
+      const p = JSON.parse(sess);
+      loginBtn.style.display='none'; userMenu.style.display='grid';
+      userMenu.textContent = (p.nama?.[0]||'A').toUpperCase();
+    }catch{}
+  }
+
+  // --- Tiny toast
+  function toast(text, tone='ok'){
+    const t = document.createElement('div');
+    t.textContent = text;
+    t.style.position='fixed'; t.style.left='50%'; t.style.bottom='24px'; t.style.transform='translateX(-50%)';
+    t.style.padding='10px 14px'; t.style.borderRadius='999px';
+    t.style.background = tone==='danger' ? 'var(--danger)' : 'var(--brand-2)';
+    t.style.color='#fff'; t.style.boxShadow='var(--shadow)'; t.style.zIndex='90';
+    document.body.appendChild(t); setTimeout(()=>{ t.style.transition='all .25s ease'; t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(8px)'; }, 1800);
+    setTimeout(()=> t.remove(), 2200);
+  }
+
+  // --- Renderers
+  function renderProfile(){
+    view.innerHTML = `
+      <section class="hero">
+        <div class="kpi">
+          <img src="logo-serikat.png" alt="Logo SPM" style="width:46px;height:46px;border-radius:12px;background:#fff;flex:0 0 auto" />
+          <div>
+            <h2>Serikat Pekerja Mandiri – PT. OKI Pulp &amp; Paper Mills</h2>
+            <p>Rumah perjuangan untuk <strong>kesejahteraan, keselamatan, dan martabat pekerja</strong> di lingkungan OKI Pulp &amp; Paper Mills.</p>
+          </div>
+        </div>
+        <div class="ribbon">
+          <span><strong>Agenda terdekat:</strong> Rapat Koordinasi Pengurus • 12 Okt, 09:00 WIB</span>
+          <a class="pill" href="#agenda" onclick="setRoute('agenda');return false;">Lihat Kalender</a>
+        </div>
+      </section>
+
+      <section class="section grid cols-2" aria-label="Profil singkat">
+        <div class="card">
+          <h3>Visi & Misi</h3>
+          <p class="muted">Mewujudkan hubungan industrial yang adil, aman, dan bermartabat melalui dialog sosial, perjanjian kerja bersama, dan peningkatan kapasitas anggota.</p>
+          <ul>
+            <li>Perlindungan hak-hak normatif dan K3.</li>
+            <li>Transparansi dan akuntabilitas organisasi.</li>
+            <li>Peningkatan kompetensi melalui pelatihan berkelanjutan.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Struktur Organisasi</h3>
+          <p class="muted">Ketua • Sekretaris • Bendahara • Bidang Advokasi • Bidang Organisasi • Bidang Pendidikan • Bidang Humas.</p>
+          <div class="divider"></div>
+          <a class="btn ghost" href="#dokumen" onclick="setRoute('dokumen');return false;">Lihat AD/ART & SK Pengurus</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>Layanan Utama</h3>
+        <div class="grid cols-2">
+          <div class="card">
+            <strong>Gabung Anggota</strong>
+            <p class="muted">Daftar online, dapatkan KTA digital, akses pelatihan & bantuan hukum.</p>
+            <div class="actions"><a class="btn primary" href="#daftar" onclick="setRoute('daftar');return false;">Daftar Sekarang</a></div>
+          </div>
+          <div class="card">
+            <strong>Pengaduan</strong>
+            <p class="muted">Sampaikan masalah kerja (PHK, upah, K3, diskriminasi). Kami tindaklanjuti cepat & rapi.</p>
+            <div class="actions"><a class="btn primary" href="#pengaduan" onclick="setRoute('pengaduan');return false;">Buat Pengaduan</a></div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderDaftar(){
+    view.innerHTML = `
+      <section class="section">
+        <h3>Pendaftaran Anggota</h3>
+        <p class="muted">Isi data di bawah. Setelah diverifikasi, Anda akan menerima nomor KTA.</p>
+        <form id="f-daftar">
+          <div class="grid cols-2">
+            <div class="field">
+              <label>Nama Lengkap</label>
+              <input name="nama" required placeholder="Nama sesuai KTP" />
+            </div>
+            <div class="field">
+              <label>NIK</label>
+              <input name="nik" inputmode="numeric" pattern="^[0-9]{16}$" placeholder="16 digit" required />
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <div class="field">
+              <label>Nomor HP</label>
+              <input name="hp" inputmode="numeric" pattern="^[0-9]{9,15}$" placeholder="08xxxxxxxxxx" required />
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input name="email" type="email" placeholder="nama@contoh.com" />
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <div class="field">
+              <label>Departemen/Bagian</label>
+              <input name="dept" required placeholder="Contoh: Produksi, Maintenance, K3" />
+            </div>
+            <div class="field">
+              <label>Jenis Keanggotaan</label>
+              <select name="jenis" required>
+                <option value="">Pilih…</option>
+                <option>Reguler</option>
+                <option>Pengurus</option>
+                <option>Calon Anggota</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Alamat Domisili</label>
+            <textarea name="alamat" rows="3" placeholder="Alamat lengkap"></textarea>
+          </div>
+          <div class="actions">
+            <button class="btn primary" type="submit">Kirim Pendaftaran</button>
+            <button class="btn ghost" type="reset">Reset</button>
+          </div>
+        </form>
+        <div id="daftar-ok" class="notice success" style="display:none; margin-top:10px">Terima kasih! Data tersimpan. Tim kami akan verifikasi dan menerbitkan KTA.</div>
+      </section>
+    `;
+    $('#f-daftar').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      // Simulasi simpan
+      localStorage.setItem('spm_daftar', JSON.stringify(Object.fromEntries(new FormData(e.target))));
+      $('#daftar-ok').style.display='';
+      toast('Form pendaftaran terkirim');
+      e.target.reset();
+    });
+  }
+
+  function renderPengaduan(){
+    view.innerHTML = `
+      <section class="section">
+        <h3>Form Pengaduan</h3>
+        <p class="muted">Data Anda kami rahasiakan. Sertakan kronologi singkat & bukti (opsional, link/tautan).</p>
+        <form id="f-adu">
+          <div class="grid cols-2">
+            <div class="field">
+              <label>Nama</label>
+              <input name="nama" required />
+            </div>
+            <div class="field">
+              <label>Nomor HP</label>
+              <input name="hp" inputmode="numeric" pattern="^[0-9]{9,15}$" required />
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <div class="field">
+              <label>Jenis Kasus</label>
+              <select name="jenis" required>
+                <option value="">Pilih…</option>
+                <option>PHK/Skorsing</option>
+                <option>Upah/Lembur</option>
+                <option>Keselamatan & Kesehatan Kerja</option>
+                <option>Diskriminasi/Intimidasi</option>
+                <option>Lainnya</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Lokasi/Bagian</label>
+              <input name="lokasi" placeholder="Contoh: Line 3 - Shift B" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Kronologi Singkat</label>
+            <textarea name="kronologi" rows="5" required placeholder="Ceritakan kejadian, pihak terlibat, waktu kejadian"></textarea>
+          </div>
+          <div class="field">
+            <label>Tautan Bukti (opsional)</label>
+            <input name="bukti" type="url" placeholder="https://link-bukti.com/…" />
+          </div>
+          <div class="actions">
+            <button class="btn primary" type="submit">Kirim Pengaduan</button>
+            <button class="btn ghost" type="reset">Reset</button>
+          </div>
+        </form>
+        <div id="adu-ok" class="notice success" style="display:none; margin-top:10px">Pengaduan diterima. Nomor tiket: <code id="tiket"></code>. Kami akan menghubungi Anda.</div>
+      </section>
+    `;
+    $('#f-adu').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target));
+      const id = 'ADU-' + Math.random().toString(36).slice(2,8).toUpperCase();
+      const list = JSON.parse(localStorage.getItem('spm_adu')||'[]');
+      list.push({id, ...data, waktu: new Date().toISOString()});
+      localStorage.setItem('spm_adu', JSON.stringify(list));
+      $('#tiket').textContent = id;
+      $('#adu-ok').style.display='';
+      toast('Pengaduan terkirim: '+id);
+      e.target.reset();
+    });
+  }
+
+  function renderDokumen(){
+    view.innerHTML = `
+      <section class="section">
+        <h3>Dokumen Serikat</h3>
+        <div class="list">
+          <div class="item">
+            <strong>AD/ART SPM OKI (PDF)</strong>
+            <a class="btn ghost" href="#" onclick="alert('Tempatkan file AD-ART.pdf & ubah tautan ini.');return false;">Unduh</a>
+          </div>
+          <div class="item">
+            <strong>Perjanjian Kerja Bersama (PKB) – Ringkasan</strong>
+            <a class="btn ghost" href="#" onclick="alert('Tempatkan file PKB.pdf & ubah tautan ini.');return false;">Unduh</a>
+          </div>
+          <div class="item">
+            <strong>SK Pengurus & Struktur Organisasi</strong>
+            <a class="btn ghost" href="#" onclick="alert('Tempatkan file SK-Pengurus.pdf & ubah tautan ini.');return false;">Unduh</a>
+          </div>
+          <div class="item">
+            <strong>Laporan Keuangan & Kegiatan Tahunan</strong>
+            <a class="btn ghost" href="#" onclick="alert('Tempatkan file Laporan-Tahunan.pdf & ubah tautan ini.');return false;">Unduh</a>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderAgenda(){
+    const now = new Date();
+    const ym = now.toLocaleString('id-ID', { month:'long', year:'numeric' });
+    const events = getDemoEvents();
+    const list = events.map(ev=>`
+      <div class="item">
+        <div style="width:48px; text-align:center">
+          <div style="font-weight:900; font-size:18px">${new Date(ev.date).getDate()}</div>
+          <div class="muted" style="font-size:12px">${new Date(ev.date).toLocaleString('id-ID',{month:'short'})}</div>
+        </div>
+        <div style="flex:1">
+          <strong>${ev.title}</strong>
+          <div class="muted">${ev.time} • ${ev.place}</div>
+        </div>
+        <a class="btn ghost" href="#" onclick="alert('Tambahkan ke kalender Anda.');return false;">Tambah</a>
+      </div>
+    `).join('');
+    view.innerHTML = `
+      <section class="section">
+        <h3>Agenda Kalender — ${ym}</h3>
+        <div class="notice" style="margin-bottom:10px">Klik “Tambah” untuk menyimpan pengingat (contoh). Integrasikan dengan Google Calendar / iCal di tahap produksi.</div>
+        <div class="list">${list}</div>
+      </section>
+    `;
+  }
+
+  function renderModul(){
+    view.innerHTML = `
+      <section class="section">
+        <h3>Modul Pelatihan</h3>
+        <div class="grid cols-2">
+          ${[
+            {t:'Dasar Ketenagakerjaan & PKB', d:'Pengenalan UU, perjanjian kerja, dan hak normatif.'},
+            {t:'K3 & Budaya Keselamatan', d:'Hazard identification, APD, dan pelaporan insiden.'},
+            {t:'Advokasi & Negosiasi', d:'Teknik mediasi, perundingan, dan pencatatan risalah.'},
+            {t:'Organizing & Komunikasi', d:'Rekrutmen anggota, kampanye internal, media sosial.'},
+          ].map(m=>`
+            <div class="card">
+              <strong>${m.t}</strong>
+              <p class="muted">${m.d}</p>
+              <div class="actions">
+                <a class="btn primary" href="#" onclick="alert('Lampirkan PDF/Video modul.');return false;">Buka Modul</a>
+                <a class="btn ghost" href="#" onclick="alert('Daftar jadwal pelatihan.');return false;">Jadwal</a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderProgram(){
+    view.innerHTML = `
+      <section class="section">
+        <h3>Program Kerja Tahunan</h3>
+        <ul>
+          <li><strong>Q1:</strong> Konsolidasi anggota & updating database KTA.</li>
+          <li><strong>Q2:</strong> Penyusunan & sosialisasi draf PKB baru.</li>
+          <li><strong>Q3:</strong> Pelatihan K3 lanjutan & audit tempat kerja.</li>
+          <li><strong>Q4:</strong> Laporan keuangan terbuka & konferensi anggota.</li>
+        </ul>
+        <div class="divider"></div>
+        <a class="btn ghost" href="#" onclick="alert('Unggah file Rencana Strategis.pdf & hubungkan di sini.');return false;">Unduh Rencana Strategis</a>
+      </section>
+    `;
+  }
+
+  function renderDashboard(){
+    const me = JSON.parse(localStorage.getItem('spm_user')||'{}');
+    if(!me.metode){ setRoute('profile'); return }
+    const adu = JSON.parse(localStorage.getItem('spm_adu')||'[]');
+    view.innerHTML = `
+      <section class="section">
+        <h3>Dashboard Anggota</h3>
+        <div class="grid cols-2">
+          <div class="card">
+            <strong>Identitas</strong>
+            <p class="muted">Nama: ${me.nama||'Anggota'}<br>Metode masuk: ${me.metode.toUpperCase()} ${me.kta?('• '+me.kta):''}</p>
+            <div class="actions">
+              <a class="btn ghost" href="#kta" onclick="alert('Tampilkan KTA digital di langkah produksi.');return false;">Lihat KTA Digital</a>
+            </div>
+          </div>
+          <div class="card">
+            <strong>Ringkasan Pengaduan</strong>
+            <p class="muted">${adu.length? 'Total '+adu.length+' pengaduan tersimpan di perangkat ini.':'Belum ada pengaduan.'}</p>
+            <div class="actions"><a class="btn primary" href="#pengaduan" onclick="setRoute('pengaduan');return false;">Buat Pengaduan</a></div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  // --- Demo data
+  function getDemoEvents(){
+    const base = new Date();
+    return [
+      {date: new Date(base.getFullYear(), base.getMonth(), 12), time:'09:00–11:00', title:'Rapat Koordinasi Pengurus', place:'Ruang Serikat'},
+      {date: new Date(base.getFullYear(), base.getMonth(), 18), time:'13:00–15:00', title:'Pelatihan K3 Dasar (Batch 1)', place:'Training Center'},
+      {date: new Date(base.getFullYear(), base.getMonth(), 25), time:'08:30–10:00', title:'Dialog Sosial dengan HR', place:'Aula Kantor'},
+      {date: new Date(base.getFullYear(), base.getMonth()+1, 1), time:'07:30–12:00', title:'Aksi May Day', place:'Lapangan Kota'},
+    ];
+  }
+
+  // --- Startup
+  window.addEventListener('popstate', ()=> {
+    const route = location.hash.replace('#','') || 'profile';
+    setRoute(route, false);
+  });
+
+  // Initial route
+  setRoute(location.hash.replace('#','') || 'profile', false);
+</script>
+</body>
+</html>
