@@ -94,7 +94,7 @@
   .sheet header img{width:40px; height:40px; border-radius:10px; background:#fff}
   .sheet nav{padding:.4rem .6rem .8rem; overflow:auto}
   .navlink{
-    display:flex; align-items:center; gap:.8rem; padding:.72rem .8rem; border-radius:12px; font-weight:600; color:var(--text);
+    display:flex; align-items:center; gap:.8rem; padding:.72rem .8rem;  font-weight:600; color:var(--text);
   }
   .navlink:hover{background:color-mix(in srgb, var(--text) 8%, transparent)}
   .navlink[aria-current="page"]{background:color-mix(in srgb,var(--brand) 18%, transparent); outline:1px solid color-mix(in srgb,var(--brand) 45%, transparent)}
@@ -125,7 +125,7 @@
   /* Cards & lists */
   .card{padding:14px; border-radius:14px; background:var(--panel); border:1px solid color-mix(in srgb, var(--text) 10%, transparent)}
   .list{display:grid; gap:10px}
-  .list .item{display:flex; gap:12px; align-items:center; padding:10px 12px; border-radius:12px; background:color-mix(in srgb, var(--text) 6%, transparent)}
+  .list .item{display:flex; gap:12px; align-items:center; padding:10px 12px;  background:color-mix(in srgb, var(--text) 6%, transparent)}
   /* Forms */
   form{display:grid; gap:12px}
   label{font-weight:700}
@@ -133,15 +133,15 @@
     display:grid; gap:6px
   }
   input, select, textarea{
-    width:100%; padding:12px 12px; border-radius:12px; border:1px solid color-mix(in srgb, var(--text) 18%, transparent);
+    width:100%; padding:12px 12px;  border:1px solid color-mix(in srgb, var(--text) 18%, transparent);
     background:var(--panel); color:var(--text); outline:none;
   }
   input:focus, select:focus, textarea:focus{box-shadow:0 0 0 3px var(--ring); border-color:color-mix(in srgb, var(--brand) 60%, transparent)}
   .actions{display:flex; gap:10px; flex-wrap:wrap}
-  .btn{border:0; border-radius:12px; padding:12px 14px; font-weight:700; cursor:pointer}
+  .btn{border:0;  padding:12px 14px; font-weight:700; cursor:pointer}
   .btn.primary{background:var(--brand); color:#fff; box-shadow:0 6px 14px color-mix(in srgb,var(--brand) 30%, transparent)}
   .btn.ghost{background:transparent; color:var(--text); border:1px solid color-mix(in srgb, var(--text) 20%, transparent)}
-  .notice{padding:10px 12px; border-radius:12px; border:1px solid color-mix(in srgb,var(--brand) 50%, transparent); background:color-mix(in srgb,var(--brand) 10%, transparent)}
+  .notice{padding:10px 12px;  border:1px solid color-mix(in srgb,var(--brand) 50%, transparent); background:color-mix(in srgb,var(--brand) 10%, transparent)}
   .success{border-color: color-mix(in srgb,var(--brand-2) 60%, transparent); background:color-mix(in srgb,var(--brand-2) 12%, transparent)}
   .warn{border-color: color-mix(in srgb,var(--warn) 60%, transparent); background:color-mix(in srgb,var(--warn) 12%, transparent)}
   /* Modal */
@@ -153,7 +153,7 @@
     animation:pop .18s ease;
   }
   .tabs{display:flex; gap:8px; margin-bottom:8px}
-  .tab{flex:1; padding:10px 12px; border-radius:12px; text-align:center; font-weight:800; cursor:pointer; border:1px solid color-mix(in srgb, var(--text) 12%, transparent)}
+  .tab{flex:1; padding:10px 12px;  text-align:center; font-weight:800; cursor:pointer; border:1px solid color-mix(in srgb, var(--text) 12%, transparent)}
   .tab.active{background:var(--brand); color:#fff; border-color:var(--brand)}
   .close-x{position:absolute; right:8px; top:8px}
   @keyframes pop{from{transform:scale(.96); opacity:.6} to{transform:scale(1); opacity:1}}
@@ -208,6 +208,29 @@ footer{ color: color-mix(in srgb, var(--text) 92%, transparent); }
 footer a{ color: color-mix(in srgb, var(--brand) 90%, #fff 0%); font-weight:700; }
 footer a:hover{ text-decoration:none; filter:brightness(1.08); }
 /* === End footer refresh === */
+
+/* === Logo sharp-corner patch === */
+.brand img,
+#brandLogo,
+.sheet header img,
+.hero .kpi img{
+  border-radius: 0 !important;   /* no cropping on corners */
+  background: transparent !important;
+  object-fit: contain;
+  height: auto; /* allow natural height when width is constrained */
+}
+/* Keep consistent sizing for specific placements */
+.brand img, #brandLogo{ height:34px; width:auto; }
+.sheet header img{ height:40px; width:auto; }
+.hero .kpi img{ height:46px; width:auto; }
+
+/* === Footer mobile centering === */
+@media (max-width: 759px){
+  footer{ text-align:center; }
+  footer .footgrid{ justify-items:center; }
+  footer .footgrid > div:first-child{ justify-content:center; }
+  footer .footgrid > div:last-child{ justify-self:center !important; }
+}
 </style>
 </head>
 <body>
@@ -522,7 +545,7 @@ footer a:hover{ text-decoration:none; filter:brightness(1.08); }
     view.innerHTML = `
       <section class="hero">
         <div class="kpi">
-          <img src="./images/logo-spm.png" alt="Logo SPM" style="height:46px;width:auto;border-radius:12px;background:transparent;flex:0 0 auto" />
+          <img src="./images/logo-spm.png" alt="Logo SPM" style="height:46px;width:auto;background:transparent;flex:0 0 auto" />
           <div>
             <h2>Serikat Pekerja Mandiri – PT. OKI Pulp &amp; Paper Mills</h2>
             <p>Rumah perjuangan untuk <strong>kesejahteraan, keselamatan, dan martabat pekerja</strong> di lingkungan OKI Pulp &amp; Paper Mills.</p>
