@@ -209,24 +209,38 @@ footer a{ color: color-mix(in srgb, var(--brand) 90%, #fff 0%); font-weight:700;
 footer a:hover{ text-decoration:none; filter:brightness(1.08); }
 /* === End footer refresh === */
 
-/* === Logo sharp-corner & transparency (override) === */
+/* === Logo sharp-corner patch === */
 .brand img,
 #brandLogo,
 .sheet header img,
 .hero .kpi img{
-  border-radius: 0 !important;
+  border-radius: 0 !important;   /* no cropping on corners */
   background: transparent !important;
   object-fit: contain;
+  height: auto; /* allow natural height when width is constrained */
 }
+/* Keep consistent sizing for specific placements */
 .brand img, #brandLogo{ height:34px; width:auto; }
 .sheet header img{ height:40px; width:auto; }
 .hero .kpi img{ height:46px; width:auto; }
 
-/* === Footer desktop center for middle block === */
-footer .footgrid > div:nth-child(2){
-  justify-self: center;
-  text-align: center;
+/* === Footer mobile centering === */
+@media (max-width: 759px){
+  footer{ text-align:center; }
+  footer .footgrid{ justify-items:center; }
+  footer .footgrid > div:first-child{ justify-content:center; }
+  footer .footgrid > div:last-child{ justify-self:center !important; }
 }
+
+/* === Footer center alignment for desktop (middle column) === */
+@media (min-width: 760px){
+  footer .footgrid > div:nth-child(2){
+    text-align:center;           /* center the copyright + org lines */
+    justify-self:center;         /* keep the group centered in the grid cell */
+  }
+}
+/* === End patch === */
+
 </style>
 </head>
 <body>
@@ -307,12 +321,13 @@ footer .footgrid > div:nth-child(2){
     <div class="footgrid">
       <div>
         <div class="chip">📍 Sumsel • Ogan Komering Ilir</div>
-        <div class="chip">📧 sekretariat@contoh.org</div>
+        <div class="chip">📧 spmptoki@gmail.com</div>
       </div>
       <div>
-        © <span id="y"></span> Serikat Pekerja Mandiri – PT. OKI Pulp &amp; Paper Mills
+       © <span id="y"></span> Serikat Pekerja Mandiri<br>
+       PT. OKI Pulp &amp; Paper Mills
       </div>
-      <div>
+      <div style="justify-self:end">
         <a class="chip" href="#" onclick="toTop(event)">⬆️ Kembali ke atas</a>
       </div>
     </div>
