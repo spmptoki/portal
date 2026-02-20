@@ -165,28 +165,49 @@
   .chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:color-mix(in srgb, var(--text) 8%, transparent); border:1px solid color-mix(in srgb,var(--text) 12%, transparent)}
   .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
 
-/* === Footer visibility patch (desktop) === */
-footer{ 
-  background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 96%, transparent), color-mix(in srgb, var(--panel) 100%, transparent));
-  border-top: 1px solid color-mix(in srgb, var(--text) 22%, transparent);
-  color: var(--text); /* increase contrast */
-}
-.footgrid{ gap:14px; }
-footer .chip{ 
-  background: color-mix(in srgb, var(--text) 14%, transparent); 
-  border-color: color-mix(in srgb, var(--text) 26%, transparent);
-  color: var(--text);
-}
-footer a{ color: color-mix(in srgb, var(--brand) 85%, #fff 0%); font-weight: 700; }
-footer a:hover{ text-decoration: none; filter: brightness(1.1); }
-@media (min-width: 1000px){
-  footer{ padding: 48px 18px; }
-  footer .chip{ padding: 8px 12px; }
-}
-/* === End patch === */
+/* === Logo aspect-ratio & transparency patch === */
+.brand img{ height:34px; width:auto; object-fit:contain; background:transparent !important; box-shadow:none; border-radius:8px; }
+.sheet header img{ height:40px; width:auto; object-fit:contain; background:transparent !important; border-radius:8px; box-shadow:none; }
+/* Hero KPI logo in profile */
+.hero .kpi img{ height:46px; width:auto; object-fit:contain; background:transparent !important; }
+/* Ensure generic logo id if used elsewhere */
+#brandLogo{ height:34px; width:auto; object-fit:contain; background:transparent !important; }
+/* === End logo patch === */
 
-/* Footer scoped muted override */
-footer .muted{ color: color-mix(in srgb, var(--text) 80%, transparent); }
+/* === Footer pro layout refresh === */
+footer{ 
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 94%, transparent), color-mix(in srgb, var(--panel) 100%, transparent));
+  border-top: 1px solid color-mix(in srgb, var(--text) 18%, transparent);
+}
+footer .footgrid{ 
+  width:min(100%, 1000px); 
+  margin-inline:auto; 
+  grid-template-columns: 1fr auto 1fr; 
+  align-items:center; 
+  gap:12px; 
+}
+/* stack on mobile */
+@media (max-width: 759px){
+  footer .footgrid{ grid-template-columns: 1fr; text-align:center; }
+  footer .footgrid > div:last-child{ justify-self:center; }
+}
+/* tidy left group */
+footer .footgrid > div:first-child{ display:flex; flex-wrap:wrap; gap:8px; }
+/* subtle chips */
+footer .chip{ 
+  padding:6px 10px; 
+  border-radius:14px; 
+  background:color-mix(in srgb, var(--text) 7%, transparent); 
+  border:1px solid color-mix(in srgb, var(--text) 18%, transparent); 
+  box-shadow:none; 
+}
+footer .chip strong{ font-weight:700; }
+/* center text contrast */
+footer{ color: color-mix(in srgb, var(--text) 92%, transparent); }
+/* link treatment */
+footer a{ color: color-mix(in srgb, var(--brand) 90%, #fff 0%); font-weight:700; }
+footer a:hover{ text-decoration:none; filter:brightness(1.08); }
+/* === End footer refresh === */
 </style>
 </head>
 <body>
@@ -501,7 +522,7 @@ footer .muted{ color: color-mix(in srgb, var(--text) 80%, transparent); }
     view.innerHTML = `
       <section class="hero">
         <div class="kpi">
-          <img src="./images/logo-spm.png" alt="Logo SPM" style="width:46px;height:46px;border-radius:12px;background:#fff;flex:0 0 auto" />
+          <img src="./images/logo-spm.png" alt="Logo SPM" style="height:46px;width:auto;border-radius:12px;background:transparent;flex:0 0 auto" />
           <div>
             <h2>Serikat Pekerja Mandiri – PT. OKI Pulp &amp; Paper Mills</h2>
             <p>Rumah perjuangan untuk <strong>kesejahteraan, keselamatan, dan martabat pekerja</strong> di lingkungan OKI Pulp &amp; Paper Mills.</p>
